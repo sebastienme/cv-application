@@ -82,6 +82,14 @@ button:focus-visible {
   padding: 20px;
 }
 
+.clear-resume {
+  color: red;
+}
+
+.clear-resume > img {
+  width: 16px;
+}
+
 label {
   display: block;
   margin-bottom: 8px;
@@ -93,3 +101,83 @@ input, textarea {
   margin-bottom: 16px;
   box-sizing: border-box;
 }
+
+.cv-container {
+  font-family: 'Arial', sans-serif;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.cv-container__top {
+  text-align: center;
+}
+
+.cv-container__top__name {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.top__details__list {
+  list-style: none;
+  padding: 0;
+}
+
+.top__details__list__item {
+  margin: 5px 0;
+}
+
+.cv-container__middle {
+  margin-top: 20px;
+}
+
+.middle__section__item {
+  margin-bottom: 20px;
+}
+
+.middle__section__item__title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.middle__section__item__details {
+  display: flex;
+  justify-content: space-between;
+}
+
+.item__details__left {
+  flex: 1;
+}
+
+.item__details__right {
+  flex: 2;
+}
+
+.item__details__left__date {
+  font-weight: bold;
+}
+
+.item__details__left__location {
+  color: #555;
+}
+
+.item__details__right__title {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.item__details__right__sub-title {
+  font-style: italic;
+  margin-bottom: 5px;
+}
+
+.item__details__right__description {
+  margin-top: 5px;
+}
+

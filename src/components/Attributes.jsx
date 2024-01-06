@@ -14,23 +14,27 @@ export const Card = ({children}) => {
     Pour qu'en suite je puisse manipuler librement les data dans la section du CV */
 
 export const UserForm = () => {
-    const [data, setData] = useState({
-        fullName: '',
-        email: '',
-        phone: '',
-        address: '',
-        school: '',
-        degree: '',
-        startDate: '',
-        endDate: '',
-        location: '',
-        companyName: '',
-        positionTitle: '',
-        workStartDate: '',
-        wordEndDate: '',
-        workLocation: '',
-        description: '',
-    })
+    const initialData = {
+        fullName: 'François Pignon',
+        email: 'francois.pignon@gmail.com',
+        phone: '514-222-2222',
+        address: 'Montréal, Qc, Canada',
+        school: 'Université du Québec à Montréal',
+        degree: 'Maîtrise en fiscalité',
+        startDate: '1978-09-01',
+        endDate: '1982-05-13',
+        location: 'Montréal',
+        companyName: 'Gouvernement du Québec',
+        positionTitle: `Chef, à l'impôt`,
+        workStartDate: '1984-01-10',
+        wordEndDate: 'Present',
+        workLocation: 'Montréal',
+        description: `Superviser et coordonner les activités liées à la collecte des impôts dans la province. 
+                    Responsable de la gestion des équipes chargées de l'application des lois fiscales, de veiller à la conformité des contribuables
+                    et de mettre en œuvre des politiques visant à maximiser les recettes tout en assurant l'équité et la transparence dans le système fiscal.` 
+    }
+    
+    const [data, setData] = useState(initialData)
 
     const handleChange = (e) => {
         const {id, value} = e.target;
@@ -40,9 +44,39 @@ export const UserForm = () => {
         }))
     }
 
+    const clearForm = () => {
+        setData({
+          fullName: '',
+          email: '',
+          phone: '',
+          address: '',
+          school: '',
+          degree: '',
+          startDate: '',
+          endDate: '',
+          location: '',
+          companyName: '',
+          positionTitle: '',
+          workStartDate: '',
+          workEndDate: '',
+          workLocation: '',
+          description: '',
+        });
+      };
+
+      const goBackToInitialData = () => {
+        setData(initialData);
+      }
+
     return (
         <>
             <div className="form-side">
+                <Card>
+                    <ClearCard
+                        clearForm={clearForm}
+                        initialData={goBackToInitialData}
+                    />
+                </Card>
                 <Card>
                     <h2>Détails Personnels</h2>
                     <CardPersonal
@@ -69,6 +103,23 @@ export const UserForm = () => {
                 <CV
                     data={data}
                 />
+            </div>
+        </>
+    )
+}
+
+const ClearCard = ({clearForm, initialData}) => {
+    return (
+        <>
+            <div className="clear-card">
+                <div 
+                    className="clear-resume"
+                    onClick={clearForm} 
+                ><img src="../public/delete.png" alt="" /> Effacer le CV</div>
+                <button
+                    className="btn btn-example"
+                    onClick={initialData}
+                >Charger l'Exemple</button>
             </div>
         </>
     )
