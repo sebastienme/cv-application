@@ -184,6 +184,35 @@ input, textarea {
   width: 97%;
 }
 
+.edit-buttons {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.edit-buttons__other {
+  display: flex;
+  gap: 15px;
+}
+
+.edit-btn {
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+}
+
+.btn-plain {
+  background-color: initial;
+  color: grey;
+  outline: 1px solid grey;
+}
+
+.btn-full {
+  background-color: #187ff5;
+  color: #fff;
+}
+
 .cv-container {
   margin: 0 auto;
   border: 1px solid #ddd;

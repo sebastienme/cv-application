@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react"
 import { CV } from "./CV"
+import { Button } from "./Utilities"
 
 export const Card = ({children}) => {
     return (
@@ -9,6 +10,8 @@ export const Card = ({children}) => {
         </div>
     )
 }
+
+// TODO: ajouter des fonctionnalites pour ajouter ou supprimer des emplois ou education. Faire fonctionner les boutons
 
 export const UserForm = () => {
     const initialData = {
@@ -207,6 +210,25 @@ export const CardEducation = ({data, handleChange}) => {
                     onChange={handleChange}
                 />
             </form>
+            <div className="edit-buttons">
+                <div className="edit-buttons__delete">
+                    <Button
+                        className="edit-btn btn-plain"
+                        text="Supprimer"
+                    />
+                </div>
+                <div className="edit-buttons__other">
+                    <Button
+                        className="edit-btn btn-plain"
+                        text="Annuler"
+                    /> 
+                    <Button
+                        className="edit-btn btn-full"
+                        text="Sauvegarder"
+                        type="submit"
+                    /> 
+                </div>
+            </div>
         </>
     )
 }
