@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { CV } from "./CV"
 
 export const Card = ({children}) => {
     return (
@@ -12,150 +13,206 @@ export const Card = ({children}) => {
     Il faudrait une component Parent avec toutes les data.
     Pour qu'en suite je puisse manipuler librement les data dans la section du CV */
 
-
-export const CardPersonal = () => {
-    const [formData, setFormData] = useState({
+export const UserForm = () => {
+    const [data, setData] = useState({
         fullName: '',
         email: '',
         phone: '',
-        address: ''
-    })
-    
-    const handleChange = (e) => {
-        const { id, value} = e.target;
-        setFormData((prevData) => ({
-            ...prevData,
-            [id]: value,
-        })) 
-    }
-
-    return (
-        <>
-            <h2>Personal Details</h2>
-            <form id="personnal-details-form">
-                <label>Full Name</label>
-                <input 
-                    id="fullName"
-                    value={formData.fullName}
-                    onChange={handleChange}
-                />
-                <div>{formData.fullName}</div>
-                <label>Email</label>
-                <input 
-                    id="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                />
-                <div>{formData.email}</div>
-                <label>Phone Number</label>
-                <input 
-                    id="phone"
-                    value={formData.email}
-                    onChange={handleChange}
-                />
-                <div>{formData.phone}</div>
-                <label>Address</label>
-                <textarea 
-                    id="address" 
-                    value={formData.address}
-                    onChange={handleChange} 
-                />
-                <div>{formData.address}</div>
-            </form>
-        </>
-    )
-}
-
-export const CardEducation = () => {
-    const [formData, setFormData] = useState({
+        address: '',
         school: '',
         degree: '',
         startDate: '',
         endDate: '',
         location: '',
+        companyName: '',
+        positionTitle: '',
+        workStartDate: '',
+        wordEndDate: '',
+        workLocation: '',
+        description: '',
     })
 
     const handleChange = (e) => {
         const {id, value} = e.target;
-        
-        setFormData((prevData) => ({
+        setData((prevData) => ({
             ...prevData,
             [id]: value,
         }))
     }
-    
+
     return (
         <>
-            <h2>Education</h2>
-            <form id="education-form">
-                <label>School</label>
-                <input 
-                    id="school"
-                    value={formData.school}
-                    onChange={handleChange}
+            <div className="form-side">
+                <Card>
+                    <h2>Détails Personnels</h2>
+                    <CardPersonal
+                        data={data}
+                        handleChange={handleChange}
+                    />         
+                </Card>
+                <Card>
+                    <h2>Éducation</h2>
+                    <CardEducation
+                        data={data}
+                        handleChange={handleChange}
+                    />         
+                </Card>
+                <Card>
+                    <h2>Expérience</h2>
+                    <CardJob
+                        data={data}
+                        handleChange={handleChange}
+                    />
+                </Card>
+            </div>
+            <div className="cv-side">
+                <CV
+                    data={data}
                 />
-                <div>{formData.school}</div>
+            </div>
+        </>
+    )
+}
 
-                <label>Degree</label>
+export const CardPersonal = ({data, handleChange}) => {
+    return (
+        <>
+            <form id="personnal-details-form">
+                <label>Nom Complet</label>
                 <input 
-                    id="degree"
-                    value={formData.degree}
+                    id="fullName"
+                    value={data.fullName}
                     onChange={handleChange}
                 />
-                <div>{formData.degree}</div>
-
-                <label>Start Date</label>
+                <div>{data.fullName}</div>
+                <label>Courriel</label>
                 <input 
-                    id="startDate"
-                    type="date"
-                    value={formData.startDate}
+                    id="email"
+                    value={data.email}
                     onChange={handleChange}
                 />
-                <div>{formData.startDate}</div>
-
-                <label>End Date</label>
+                <div>{data.email}</div>
+                <label>Téléphone</label>
                 <input 
-                    id="endDate"
-                    type="date"
-                    value={formData.endDate}
+                    id="phone"
+                    value={data.phone}
                     onChange={handleChange}
                 />
-                <div>{formData.endDate}</div>
-
-                <label>Location</label>
-                <input 
-                    id="location"
-                    value={formData.location}
-                    onChange={handleChange}
+                <div>{data.phone}</div>
+                <label>Adresse</label>
+                <textarea 
+                    id="address" 
+                    value={data.address}
+                    onChange={handleChange} 
                 />
-                <div>{formData.location}</div>
+                <div>{data.address}</div>
             </form>
         </>
     )
 }
 
-export const CardJob = () => {
+export const CardEducation = ({data, handleChange}) => {
     return (
         <>
-            <h2>Experience</h2>
+            <form id="education-form">
+                <label>École</label>
+                <input 
+                    id="school"
+                    value={data.school}
+                    onChange={handleChange}
+                />
+                <div>{data.school}</div>
+
+                <label>Diplôme</label>
+                <input 
+                    id="degree"
+                    value={data.degree}
+                    onChange={handleChange}
+                />
+                <div>{data.degree}</div>
+
+                <label>Date de Début</label>
+                <input 
+                    id="startDate"
+                    type="date"
+                    value={data.startDate}
+                    onChange={handleChange}
+                />
+                <div>{data.startDate}</div>
+
+                <label>Date de Fin</label>
+                <input 
+                    id="endDate"
+                    type="date"
+                    value={data.endDate}
+                    onChange={handleChange}
+                />
+                <div>{data.endDate}</div>
+
+                <label>Emplacement</label>
+                <input 
+                    id="location"
+                    value={data.location}
+                    onChange={handleChange}
+                />
+                <div>{data.location}</div>
+            </form>
+        </>
+    )
+}
+
+export const CardJob = ({data, handleChange}) => {
+    return (
+        <>
             <form id="experience-form">
-                <label for="companyName">Company Name</label>
-                <input type="text" id="companyName" name="companyName" />
+                <label>Nom de l'Entreprise</label>
+                <input 
+                    id="companyName"
+                    value={data.companyName}
+                    onChange={handleChange}
+                />
+                <div>{data.companyName}</div>
 
-                <label for="positionTitle">Position Title</label>
-                <input type="text" id="positionTitle" name="positionTitle" />
+                <label>Position</label>
+                <input 
+                    id="positionTitle"
+                    value={data.positionTitle}
+                    onChange={handleChange}
+                />
+                <div>{data.positionTitle}</div>
 
-                <label for="startDate">Start Date</label>
-                <input type="date" id="startDate" name="startDate" />
+                <label>Date de Début</label>
+                <input 
+                    id="workStartDate"
+                    type="date"
+                    value={data.workStartDate}
+                    onChange={handleChange}
+                />
+                <div>{data.workStartDate}</div>
 
-                <label for="endDate">End Date</label>
-                <input type="date" id="endDate" name="endDate" />
+                <label>Date de Fin</label>
+                <input 
+                    id="workEndDate"
+                    type="date"
+                    value={data.workEndDate}
+                    onChange={handleChange}
+                />
+                <div>{data.workEndDate}</div>
 
-                <label for="location">Location</label>
-                <input type="text" id="location" name="location" />
-
-                <label for="description">Description</label>
-                <textarea id="description" name="description" rows="4"></textarea>
+                <label>Emplacement</label>
+                <input 
+                    id="workLocation"
+                    value={data.workLocation}
+                    onChange={handleChange}
+                />
+                <div>{data.workLocation}</div>
+                <label>Description</label>
+                <textarea
+                    id="description"
+                    value={data.description}
+                    onChange={handleChange}
+                />
+                <div>{data.description}</div>
             </form>
         </>
     )

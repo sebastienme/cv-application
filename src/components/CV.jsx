@@ -1,9 +1,8 @@
-import { CardEducation } from "./Attributes"
 
-export const UpdateValue = () => {
+export const CV = ({data}) => {
     return (
         <div>
-            
+            {data.fullName}
         </div>
     )
 }

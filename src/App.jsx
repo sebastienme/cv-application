@@ -1,20 +1,10 @@
-import { Card, CardEducation, CardJob, CardPersonal } from "./components/Attributes"
-import { UpdateValue } from "./components/CV"
+import { UserForm } from "./components/Attributes"
 
 const App = () => {
 
   return (
     <>
-      <Card>
-        <CardPersonal />
-      </Card>
-      <Card>
-        <CardEducation />
-      </Card>
-      <Card>
-        <CardJob />
-      </Card>
-
+      <UserForm />
     </>
   )
 }
