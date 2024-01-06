@@ -84,28 +84,27 @@ export const CardPersonal = ({data, handleChange}) => {
                     value={data.fullName}
                     onChange={handleChange}
                 />
-                <div>{data.fullName}</div>
+
                 <label>Courriel</label>
                 <input 
                     id="email"
                     value={data.email}
                     onChange={handleChange}
                 />
-                <div>{data.email}</div>
+
                 <label>Téléphone</label>
                 <input 
                     id="phone"
                     value={data.phone}
                     onChange={handleChange}
                 />
-                <div>{data.phone}</div>
+
                 <label>Adresse</label>
                 <textarea 
                     id="address" 
                     value={data.address}
                     onChange={handleChange} 
                 />
-                <div>{data.address}</div>
             </form>
         </>
     )
@@ -121,7 +120,6 @@ export const CardEducation = ({data, handleChange}) => {
                     value={data.school}
                     onChange={handleChange}
                 />
-                <div>{data.school}</div>
 
                 <label>Diplôme</label>
                 <input 
@@ -129,7 +127,6 @@ export const CardEducation = ({data, handleChange}) => {
                     value={data.degree}
                     onChange={handleChange}
                 />
-                <div>{data.degree}</div>
 
                 <label>Date de Début</label>
                 <input 
@@ -138,7 +135,6 @@ export const CardEducation = ({data, handleChange}) => {
                     value={data.startDate}
                     onChange={handleChange}
                 />
-                <div>{data.startDate}</div>
 
                 <label>Date de Fin</label>
                 <input 
@@ -147,7 +143,6 @@ export const CardEducation = ({data, handleChange}) => {
                     value={data.endDate}
                     onChange={handleChange}
                 />
-                <div>{data.endDate}</div>
 
                 <label>Emplacement</label>
                 <input 
@@ -155,7 +150,6 @@ export const CardEducation = ({data, handleChange}) => {
                     value={data.location}
                     onChange={handleChange}
                 />
-                <div>{data.location}</div>
             </form>
         </>
     )
@@ -171,7 +165,6 @@ export const CardJob = ({data, handleChange}) => {
                     value={data.companyName}
                     onChange={handleChange}
                 />
-                <div>{data.companyName}</div>
 
                 <label>Position</label>
                 <input 
@@ -179,7 +172,6 @@ export const CardJob = ({data, handleChange}) => {
                     value={data.positionTitle}
                     onChange={handleChange}
                 />
-                <div>{data.positionTitle}</div>
 
                 <label>Date de Début</label>
                 <input 
@@ -188,7 +180,6 @@ export const CardJob = ({data, handleChange}) => {
                     value={data.workStartDate}
                     onChange={handleChange}
                 />
-                <div>{data.workStartDate}</div>
 
                 <label>Date de Fin</label>
                 <input 
@@ -197,7 +188,6 @@ export const CardJob = ({data, handleChange}) => {
                     value={data.workEndDate}
                     onChange={handleChange}
                 />
-                <div>{data.workEndDate}</div>
 
                 <label>Emplacement</label>
                 <input 
@@ -205,14 +195,13 @@ export const CardJob = ({data, handleChange}) => {
                     value={data.workLocation}
                     onChange={handleChange}
                 />
-                <div>{data.workLocation}</div>
+
                 <label>Description</label>
                 <textarea
                     id="description"
                     value={data.description}
                     onChange={handleChange}
                 />
-                <div>{data.description}</div>
             </form>
         </>
     )
