@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useState } from "react"
 import { CV } from "./CV"
 
@@ -9,10 +10,6 @@ export const Card = ({children}) => {
     )
 }
 
-/* TODO: Ca fonctionne. Mais il faudrait que je re-factore. Un lift-up.
-    Il faudrait une component Parent avec toutes les data.
-    Pour qu'en suite je puisse manipuler librement les data dans la section du CV */
-
 export const UserForm = () => {
     const initialData = {
         fullName: 'François Pignon',
@@ -21,14 +18,14 @@ export const UserForm = () => {
         address: 'Montréal, Qc, Canada',
         school: 'Université du Québec à Montréal',
         degree: 'Maîtrise en fiscalité',
-        startDate: '1978-09-01',
-        endDate: '1982-05-13',
-        location: 'Montréal',
+        startDate: 'Septembre 1978',
+        endDate: 'Mai 1982',
+        location: 'Montréal, Qc',
         companyName: 'Gouvernement du Québec',
         positionTitle: `Chef, à l'impôt`,
-        workStartDate: '1984-01-10',
-        wordEndDate: 'Present',
-        workLocation: 'Montréal',
+        workStartDate: 'Janvier 1984',
+        wordEndDate: "Aujourd'hui",
+        workLocation: 'Montréal, Qc',
         description: `Superviser et coordonner les activités liées à la collecte des impôts dans la province. 
                     Responsable de la gestion des équipes chargées de l'application des lois fiscales, de veiller à la conformité des contribuables
                     et de mettre en œuvre des politiques visant à maximiser les recettes tout en assurant l'équité et la transparence dans le système fiscal.` 
@@ -71,33 +68,40 @@ export const UserForm = () => {
     return (
         <>
             <div className="form-side">
-                <Card>
-                    <ClearCard
-                        clearForm={clearForm}
-                        initialData={goBackToInitialData}
-                    />
-                </Card>
-                <Card>
-                    <h2>Détails Personnels</h2>
-                    <CardPersonal
-                        data={data}
-                        handleChange={handleChange}
-                    />         
-                </Card>
-                <Card>
-                    <h2>Éducation</h2>
-                    <CardEducation
-                        data={data}
-                        handleChange={handleChange}
-                    />         
-                </Card>
-                <Card>
-                    <h2>Expérience</h2>
-                    <CardJob
-                        data={data}
-                        handleChange={handleChange}
-                    />
-                </Card>
+                <div className="form-side__style">
+                    <Card>
+                        <div>bla bla</div>
+                    </Card>
+                </div>
+                <div className="form-side__content">
+                    <Card>
+                        <ClearCard
+                            clearForm={clearForm}
+                            initialData={goBackToInitialData}
+                        />
+                    </Card>
+                    <Card>
+                        <h2>Détails Personnels</h2>
+                        <CardPersonal
+                            data={data}
+                            handleChange={handleChange}
+                        />         
+                    </Card>
+                    <Card>
+                        <h2>Éducation</h2>
+                        <CardEducation
+                            data={data}
+                            handleChange={handleChange}
+                        />         
+                    </Card>
+                    <Card>
+                        <h2>Expérience</h2>
+                        <CardJob
+                            data={data}
+                            handleChange={handleChange}
+                        />
+                    </Card>
+                </div>
             </div>
             <div className="cv-side">
                 <CV
@@ -151,7 +155,7 @@ export const CardPersonal = ({data, handleChange}) => {
                 />
 
                 <label>Adresse</label>
-                <textarea 
+                <input 
                     id="address" 
                     value={data.address}
                     onChange={handleChange} 
@@ -178,23 +182,24 @@ export const CardEducation = ({data, handleChange}) => {
                     value={data.degree}
                     onChange={handleChange}
                 />
-
-                <label>Date de Début</label>
-                <input 
-                    id="startDate"
-                    type="date"
-                    value={data.startDate}
-                    onChange={handleChange}
-                />
-
-                <label>Date de Fin</label>
-                <input 
-                    id="endDate"
-                    type="date"
-                    value={data.endDate}
-                    onChange={handleChange}
-                />
-
+                <div className="date-pick">
+                    <div className="date-pick__start">
+                        <label>Date de Début</label>
+                        <input 
+                            id="startDate"
+                            value={data.startDate}
+                            onChange={handleChange}
+                        />
+                    </div>
+                    <div className="date-pick__end">
+                        <label>Date de Fin</label>
+                        <input 
+                            id="endDate"
+                            value={data.endDate}
+                            onChange={handleChange}
+                        />
+                    </div>
+                </div>
                 <label>Emplacement</label>
                 <input 
                     id="location"
@@ -223,23 +228,24 @@ export const CardJob = ({data, handleChange}) => {
                     value={data.positionTitle}
                     onChange={handleChange}
                 />
-
-                <label>Date de Début</label>
-                <input 
-                    id="workStartDate"
-                    type="date"
-                    value={data.workStartDate}
-                    onChange={handleChange}
-                />
-
-                <label>Date de Fin</label>
-                <input 
-                    id="workEndDate"
-                    type="date"
-                    value={data.workEndDate}
-                    onChange={handleChange}
-                />
-
+                <div className="date-pick">
+                    <div className="date-pick__start">
+                        <label>Date de Début</label>
+                        <input 
+                            id="workStartDate"
+                            value={data.workStartDate}
+                            onChange={handleChange}
+                        />
+                    </div>
+                    <div className="date-pick__start">
+                        <label>Date de Fin</label>
+                        <input 
+                            id="workEndDate"
+                            value={data.workEndDate}
+                            onChange={handleChange}
+                        />
+                </div>
+                </div>
                 <label>Emplacement</label>
                 <input 
                     id="workLocation"

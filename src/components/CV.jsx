@@ -6,9 +6,9 @@ export const CV = ({data}) => {
                 <div className="cv-container__top__name">{data.fullName}</div>
                 <div className="cv-container__top__details">
                     <ul className="top__details__list">
-                        <li className="top__details__list__item">&#x1F4E8;{data.email}</li>
-                        <li className="top__details__list__item">&#x1F4F1;{data.phone}</li>
-                        <li className="top__details__list__item">&#x1F4CD;{data.address}</li>
+                        <li className="top__details__list__item"><img src="../public/icons8-pin-32.png" alt="" /><span>{data.email}</span></li>
+                        <li className="top__details__list__item"><img src="../public/icons8-phone-50.png" alt="" /><span>{data.phone}</span></li>
+                        <li className="top__details__list__item"><img src="../public/icons8-email-64.png" alt="" /><span>{data.address}</span></li>
                     </ul>
                 </div>
             </div>
@@ -37,7 +37,7 @@ const EducationItem = ({data}) => {
         <>
             <div className="middle__section__item__details">
                 <div className="item__details__left">
-                    <div className="item__details__left__date">{data.startDate} - {data.endDate ? data.endDate : "Aujourd'hui"}</div>
+                    <div className="item__details__left__date">{data.startDate} - {data.endDate}</div>
                     <div className="item__details__left__location">{data.location}</div>
                 </div>
                 <div className="item__details__right">
@@ -54,7 +54,7 @@ const WorkItem = ({data}) => {
         <>
             <div className="middle__section__item__details">
                 <div className="item__details__left">
-                    <div className="item__details__left__date">{data.workStartDate} - {data.workEndDate ? data.workEndDate : "Aujourd'hui"}</div>
+                    <div className="item__details__left__date">{data.workStartDate} - {data.workEndDate}</div>
                     <div className="item__details__left__location">{data.workLocation}</div>
                 </div>
                 <div className="item__details__right">
