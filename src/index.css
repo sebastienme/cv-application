@@ -309,6 +309,23 @@ input, textarea {
   margin-top: 5px;
 }
 
+.school-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.school-instance {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid grey;
+  border-top: 1px solid grey;
+}
+
+.school-add-container {
+  margin: 35px 0 5px 0;
+}
+
+
 @media only screen and (max-width: 968px) {
   .form-side {
     flex-wrap: wrap;

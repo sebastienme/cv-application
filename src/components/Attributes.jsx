@@ -41,7 +41,9 @@ export const UserForm = () => {
         }]
     }
     
-    const [data, setData] = useState(initialData)
+    const [data, setData] = useState(initialData);
+    const [showForm, setShowForm] = useState(true);
+    const [educationId, setEducationId] = useState(data.education[0].id);
 
     const handleChange = (e, index, category) => {
         const { id, value } = e.target;
@@ -67,10 +69,41 @@ export const UserForm = () => {
         });
     };
 
+    const handleShowForm = () => {
+        setShowForm(!showForm);
+    }
+
+    const handleShowInstance = (schoolId) => {
+        handleShowForm();
+        setEducationId(schoolId);
+    };
+    
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        alert(data.education[0].school)
+        handleShowForm();
     }
+
+    const addSchool = () => {
+        handleShowForm();
+        const newId = uuidv4();
+        setData((prevData) => {
+          const newEducation = {
+            id: newId,
+            school: '',
+            degree: '',
+            startDate: '',
+            endDate: '',
+            location: '',
+          };
+      
+          return {
+            ...prevData,
+            education: [...prevData.education, newEducation],
+          };
+        });
+        handleShowInstance(newId)
+      };
 
     const clearForm = () => {
         setData({
@@ -79,6 +112,7 @@ export const UserForm = () => {
           phone: '',
           address: '',
           education: [{
+            id: '',
             school: '',
             degree: '',
             startDate: '',
@@ -94,10 +128,13 @@ export const UserForm = () => {
             description: '',
           }]
         });
+        setEducationId('');
+        setShowForm(true);
       };
 
       const goBackToInitialData = () => {
         setData(initialData);
+        setEducationId(initialData.education[0].id)
       }
 
     return (
@@ -126,8 +163,12 @@ export const UserForm = () => {
                         <h2>Éducation</h2>
                         <CardEducation
                             data={data}
+                            educationId={educationId}
+                            showForm={showForm}
                             handleChange={handleChange}
                             handleSubmit={handleSubmit}
+                            handleShowInstance={handleShowInstance}
+                            handleAddSchool={addSchool}
                         />         
                     </Card>
                     <Card>
@@ -201,73 +242,91 @@ export const CardPersonal = ({data, handleChange}) => {
     )
 }
 
-export const CardEducation = ({data, handleChange, handleSubmit}) => {
+export const CardEducation = ({data, showForm, educationId, handleChange, handleSubmit, handleShowInstance, handleAddSchool}) => {
     return (
         <>
-            <form id="education-form">
-                {data.education.map((item, index) => (
-                <div key={item.id}>
-                    <label>École</label>
-                    <input 
-                        id="school"
-                        value={item.school}
-                        onChange={(e) => handleChange(e, index, 'education')}
-                    />
-    
-                    <label>Diplôme</label>
-                    <input 
-                        id="degree"
-                        value={item.degree}
-                        onChange={(e) => handleChange(e, index, 'education')}
-                    />
-                    <div className="date-pick">
-                        <div className="date-pick__start">
-                            <label>Date de Début</label>
-                            <input 
-                                id="startDate"
-                                value={item.startDate}
-                                onChange={(e) => handleChange(e, index, 'education')}
+            {showForm ?
+                (<form id="education-form">
+                    {data.education.map((item, index) => (
+                        (item.id === educationId && 
+                            <div key={item.id}>{console.log(item.id)}
+                                <label>École</label>
+                                <input 
+                                    id="school"
+                                    value={item.school}
+                                    onChange={(e) => handleChange(e, index, 'education')}
+                                />
+                
+                                <label>Diplôme</label>
+                                <input 
+                                    id="degree"
+                                    value={item.degree}
+                                    onChange={(e) => handleChange(e, index, 'education')}
+                                />
+                                <div className="date-pick">
+                                    <div className="date-pick__start">
+                                        <label>Date de Début</label>
+                                        <input 
+                                            id="startDate"
+                                            value={item.startDate}
+                                            onChange={(e) => handleChange(e, index, 'education')}
+                                        />
+                                    </div>
+                                    <div className="date-pick__end">
+                                        <label>Date de Fin</label>
+                                        <input 
+                                            id="endDate"
+                                            value={item.endDate}
+                                            onChange={(e) => handleChange(e, index, 'education')}
+                                        />
+                                    </div>
+                                </div>
+                                <label>Emplacement</label>
+                                <input 
+                                    id="location"
+                                    value={item.location}
+                                    onChange={(e) => handleChange(e, index, 'education')}
+                                />
+                            </div>
+                        ) 
+                    ))}
+                    <div className="edit-buttons">
+                        <div className="edit-buttons__delete">
+                            <Button
+                                className="edit-btn btn-plain"
+                                text="Supprimer"
                             />
                         </div>
-                        <div className="date-pick__end">
-                            <label>Date de Fin</label>
-                            <input 
-                                id="endDate"
-                                value={item.endDate}
-                                onChange={(e) => handleChange(e, index, 'education')}
-                            />
+                        <div className="edit-buttons__other">
+                            <Button
+                                className="edit-btn btn-plain"
+                                text="Annuler"
+                            /> 
+                            <Button
+                                className="edit-btn btn-full"
+                                text="Sauvegarder"
+                                type="submit"
+                                handleSubmit={handleSubmit}
+                            /> 
                         </div>
                     </div>
-                    <label>Emplacement</label>
-                    <input 
-                        id="location"
-                        value={item.location}
-                        onChange={(e) => handleChange(e, index, 'education')}
-                    />
-                </div>  
-                ))}
-                <div className="edit-buttons">
-                    <div className="edit-buttons__delete">
+                </form>
+                ) : 
+                <>
+                    <div className="school-list">
+                        {data.education.map(item => (
+                            <a key={item.id} onClick={() => handleShowInstance(item.id)}><div className="school-instance">{item.school}</div></a>
+                        ))}
+                    </div>
+                    <div className="school-add-container">
                         <Button
-                            className="edit-btn btn-plain"
-                            text="Supprimer"
+                            className="btn-plain add-btn"
+                            text="Ajouter"
+                            handleSubmit={handleAddSchool}
                         />
                     </div>
-                    <div className="edit-buttons__other">
-                        <Button
-                            className="edit-btn btn-plain"
-                            text="Annuler"
-                        /> 
-                        <Button
-                            className="edit-btn btn-full"
-                            text="Sauvegarder"
-                            type="submit"
-                            handleSubmit={handleSubmit}
-                        /> 
-                    </div>
-                </div>
-            </form>
-            
+                </>
+            }
         </>
     )
 }
