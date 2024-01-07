@@ -2,6 +2,7 @@
 import { useState } from "react"
 import { CV } from "./CV"
 import { Button } from "./Utilities"
+import { v4 as uuidv4 } from 'uuid';
 
 export const Card = ({children}) => {
     return (
@@ -19,29 +20,56 @@ export const UserForm = () => {
         email: 'francois.pignon@gmail.com',
         phone: '514-222-2222',
         address: 'Montréal, Qc, Canada',
-        school: 'Université du Québec à Montréal',
-        degree: 'Maîtrise en fiscalité',
-        startDate: 'Septembre 1978',
-        endDate: 'Mai 1982',
-        location: 'Montréal, Qc',
-        companyName: 'Gouvernement du Québec',
-        positionTitle: `Chef, à l'impôt`,
-        workStartDate: 'Janvier 1984',
-        wordEndDate: "Aujourd'hui",
-        workLocation: 'Montréal, Qc',
-        description: `Superviser et coordonner les activités liées à la collecte des impôts dans la province. 
-                    Responsable de la gestion des équipes chargées de l'application des lois fiscales, de veiller à la conformité des contribuables
-                    et de mettre en œuvre des politiques visant à maximiser les recettes tout en assurant l'équité et la transparence dans le système fiscal.` 
+        education: [{
+            id: uuidv4(),
+            school: 'Université du Québec à Montréal',
+            degree: 'Maîtrise en fiscalité',
+            startDate: 'Septembre 1978',
+            endDate: 'Mai 1982',
+            location: 'Montréal, Qc'
+        }],
+        work: [{
+            id: uuidv4(),
+            companyName: 'Gouvernement du Québec',
+            positionTitle: `Chef, à l'impôt`,
+            workStartDate: 'Janvier 1984',
+            wordEndDate: `Aujourd'hui`,
+            workLocation: 'Montréal, Qc',
+            description: `Superviser et coordonner les activités liées à la collecte des impôts dans la province. 
+                        Responsable de la gestion des équipes chargées de l'application des lois fiscales, de veiller à la conformité des contribuables
+                        et de mettre en œuvre des politiques visant à maximiser les recettes tout en assurant l'équité et la transparence dans le système fiscal.` 
+        }]
     }
     
     const [data, setData] = useState(initialData)
 
-    const handleChange = (e) => {
-        const {id, value} = e.target;
-        setData((prevData) => ({
-            ...prevData,
-            [id]: value,
-        }))
+    const handleChange = (e, index, category) => {
+        const { id, value } = e.target;
+      
+        setData((prevData) => {
+          const newData = { ...prevData };
+      
+          if (category === 'education') {
+            newData.education[index] = {
+              ...newData.education[index],
+              [id]: value,
+            };
+          } else if (category === 'work') {
+            newData.work[index] = {
+              ...newData.work[index],
+              [id]: value,
+            };
+          } else {
+            newData[id] = value;
+          }
+      
+          return newData;
+        });
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        alert(data.education[0].school)
     }
 
     const clearForm = () => {
@@ -50,17 +78,21 @@ export const UserForm = () => {
           email: '',
           phone: '',
           address: '',
-          school: '',
-          degree: '',
-          startDate: '',
-          endDate: '',
-          location: '',
-          companyName: '',
-          positionTitle: '',
-          workStartDate: '',
-          workEndDate: '',
-          workLocation: '',
-          description: '',
+          education: [{
+            school: '',
+            degree: '',
+            startDate: '',
+            endDate: '',
+            location: '',
+          }],
+          work: [{
+            companyName: '',
+            positionTitle: '',
+            workStartDate: '',
+            workEndDate: '',
+            workLocation: '',
+            description: '',
+          }]
         });
       };
 
@@ -95,6 +127,7 @@ export const UserForm = () => {
                         <CardEducation
                             data={data}
                             handleChange={handleChange}
+                            handleSubmit={handleSubmit}
                         />         
                     </Card>
                     <Card>
@@ -168,67 +201,73 @@ export const CardPersonal = ({data, handleChange}) => {
     )
 }
 
-export const CardEducation = ({data, handleChange}) => {
+export const CardEducation = ({data, handleChange, handleSubmit}) => {
     return (
         <>
             <form id="education-form">
-                <label>École</label>
-                <input 
-                    id="school"
-                    value={data.school}
-                    onChange={handleChange}
-                />
-
-                <label>Diplôme</label>
-                <input 
-                    id="degree"
-                    value={data.degree}
-                    onChange={handleChange}
-                />
-                <div className="date-pick">
-                    <div className="date-pick__start">
-                        <label>Date de Début</label>
-                        <input 
-                            id="startDate"
-                            value={data.startDate}
-                            onChange={handleChange}
-                        />
-                    </div>
-                    <div className="date-pick__end">
-                        <label>Date de Fin</label>
-                        <input 
-                            id="endDate"
-                            value={data.endDate}
-                            onChange={handleChange}
-                        />
-                    </div>
-                </div>
-                <label>Emplacement</label>
-                <input 
-                    id="location"
-                    value={data.location}
-                    onChange={handleChange}
-                />
-            </form>
-            <div className="edit-buttons">
-                <div className="edit-buttons__delete">
-                    <Button
-                        className="edit-btn btn-plain"
-                        text="Supprimer"
+                {data.education.map((item, index) => (
+                <div key={item.id}>
+                    <label>École</label>
+                    <input 
+                        id="school"
+                        value={item.school}
+                        onChange={(e) => handleChange(e, index, 'education')}
                     />
+    
+                    <label>Diplôme</label>
+                    <input 
+                        id="degree"
+                        value={item.degree}
+                        onChange={(e) => handleChange(e, index, 'education')}
+                    />
+                    <div className="date-pick">
+                        <div className="date-pick__start">
+                            <label>Date de Début</label>
+                            <input 
+                                id="startDate"
+                                value={item.startDate}
+                                onChange={(e) => handleChange(e, index, 'education')}
+                            />
+                        </div>
+                        <div className="date-pick__end">
+                            <label>Date de Fin</label>
+                            <input 
+                                id="endDate"
+                                value={item.endDate}
+                                onChange={(e) => handleChange(e, index, 'education')}
+                            />
+                        </div>
+                    </div>
+                    <label>Emplacement</label>
+                    <input 
+                        id="location"
+                        value={item.location}
+                        onChange={(e) => handleChange(e, index, 'education')}
+                    />
+                </div>  
+                ))}
+                <div className="edit-buttons">
+                    <div className="edit-buttons__delete">
+                        <Button
+                            className="edit-btn btn-plain"
+                            text="Supprimer"
+                        />
+                    </div>
+                    <div className="edit-buttons__other">
+                        <Button
+                            className="edit-btn btn-plain"
+                            text="Annuler"
+                        /> 
+                        <Button
+                            className="edit-btn btn-full"
+                            text="Sauvegarder"
+                            type="submit"
+                            handleSubmit={handleSubmit}
+                        /> 
+                    </div>
                 </div>
-                <div className="edit-buttons__other">
-                    <Button
-                        className="edit-btn btn-plain"
-                        text="Annuler"
-                    /> 
-                    <Button
-                        className="edit-btn btn-full"
-                        text="Sauvegarder"
-                        type="submit"
-                    /> 
-                </div>
-            </div>
+            </form>
+            
         </>
     )
 }

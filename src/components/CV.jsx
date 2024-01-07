@@ -16,9 +16,11 @@ export const CV = ({data}) => {
                 <ul className="cv-container__middle__section">
                     <li className="middle__section__item">
                         <div className="middle__section__item__title">Éducation</div>
-                        <EducationItem 
-                            data={data}
-                        />
+                        {data.education.map((item) => (
+                            <>
+                                <EducationItem key={item.id} data={item} />
+                            </>
+                        ))}
                     </li>
                     <li className="middle__section__item">
                         <div className="middle__section__item__title">Expérience Professionel</div>
@@ -34,35 +36,31 @@ export const CV = ({data}) => {
 
 const EducationItem = ({data}) => {
     return (
-        <>
-            <div className="middle__section__item__details">
-                <div className="item__details__left">
-                    <div className="item__details__left__date">{data.startDate} - {data.endDate}</div>
-                    <div className="item__details__left__location">{data.location}</div>
-                </div>
-                <div className="item__details__right">
-                    <div className="item__details__right__title">{data.school}</div>
-                    <div className="item__details__right__sub-title">{data.degree}</div>
-                </div>
+        <div className="middle__section__item__details" key={data.id}>
+            <div className="item__details__left">
+                <div className="item__details__left__date">{data.startDate} - {data.endDate}</div>
+                <div className="item__details__left__location">{data.location}</div>
             </div>
-        </>
+            <div className="item__details__right">
+                <div className="item__details__right__title">{data.school}</div>
+                <div className="item__details__right__sub-title">{data.degree}</div>
+            </div>
+        </div>
     )
 }
 
 const WorkItem = ({data}) => {
     return (
-        <>
-            <div className="middle__section__item__details">
-                <div className="item__details__left">
-                    <div className="item__details__left__date">{data.workStartDate} - {data.workEndDate}</div>
-                    <div className="item__details__left__location">{data.workLocation}</div>
-                </div>
-                <div className="item__details__right">
-                    <div className="item__details__right__title">{data.companyName}</div>
-                    <div className="item__details__right__sub-title">{data.positionTitle}</div>
-                    <div className="item__details__right__description">{data.description}</div>
-                </div>
+        <div className="middle__section__item__details">
+            <div className="item__details__left">
+                <div className="item__details__left__date">{data.workStartDate} - {data.workEndDate}</div>
+                <div className="item__details__left__location">{data.workLocation}</div>
             </div>
-        </>
+            <div className="item__details__right">
+                <div className="item__details__right__title">{data.companyName}</div>
+                <div className="item__details__right__sub-title">{data.positionTitle}</div>
+                <div className="item__details__right__description">{data.description}</div>
+            </div>
+        </div>
     )
 }
