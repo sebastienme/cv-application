@@ -12,7 +12,7 @@ export const Card = ({children}) => {
     )
 }
 
-// TODO: ajouter des fonctionnalites pour ajouter ou supprimer des emplois ou education. Faire fonctionner les boutons
+// TODO: faire fonctionner le handleChange de Work card
 
 export const UserForm = () => {
     const initialData = {
@@ -43,7 +43,9 @@ export const UserForm = () => {
     
     const [data, setData] = useState(initialData);
     const [showForm, setShowForm] = useState(false);
-    const [educationId, setEducationId] = useState('whatever');
+    const [showWorkForm, setShowWorkForm] = useState(false);
+    const [educationId, setEducationId] = useState('whateverId');
+    const [workId, setWorkId] = useState('whateverId');
 
     const handleChange = (e, index, category) => {
         const { id, value } = e.target;
@@ -73,9 +75,18 @@ export const UserForm = () => {
         setShowForm(!showForm);
     }
 
+    const handleShowWorkForm = () => {
+        setShowWorkForm(!showWorkForm);
+    }
+
     const handleShowInstance = (schoolId) => {
         handleShowForm();
         setEducationId(schoolId);
+    };
+
+    const handleShowWorkInstance = (professionId) => {
+        handleShowWorkForm();
+        setWorkId(professionId);
     };
     
 
@@ -116,10 +127,7 @@ export const UserForm = () => {
                 education : updatedEducation,
             }
         })
-        console.log(data.education)
     }
-
-
 
     const clearForm = () => {
         setData({
@@ -193,6 +201,9 @@ export const UserForm = () => {
                         <CardJob
                             data={data}
                             handleChange={handleChange}
+                            workId={workId}
+                            showForm={showWorkForm}
+                            handleShowInstance={handleShowWorkInstance}
                         />
                     </Card>
                 </div>
@@ -317,10 +328,6 @@ export const CardEducation = ({data, showForm, educationId, handleChange, handle
                         </div>
                         <div className="edit-buttons__other">
                             <Button
-                                className="edit-btn btn-plain"
-                                text="Annuler"
-                            /> 
-                            <Button
                                 className="edit-btn btn-full"
                                 text="Sauvegarder"
                                 type="submit"
@@ -349,55 +356,78 @@ export const CardEducation = ({data, showForm, educationId, handleChange, handle
     )
 }
 
-export const CardJob = ({data, handleChange}) => {
+export const CardJob = ({data, handleChange, workId, showForm, handleShowInstance}) => {
     return (
         <>
-            <form id="experience-form">
-                <label>Nom de l'Entreprise</label>
-                <input 
-                    id="companyName"
-                    value={data.companyName}
-                    onChange={handleChange}
-                />
+            {showForm ?
+                (<form id="experience-form">
+                    {data.work.map((item,index) => (
+                        (item.id === workId &&
+                            <div key={item.id}>{console.log("Card work: " + item.id)}
+                                <label>Nom de l'Entreprise</label>
+                                <input 
+                                    id="companyName"
+                                    value={item.companyName}
+                                    onChange={(e) => handleChange(e, index, 'work')}
+                                />
 
-                <label>Position</label>
-                <input 
-                    id="positionTitle"
-                    value={data.positionTitle}
-                    onChange={handleChange}
-                />
-                <div className="date-pick">
-                    <div className="date-pick__start">
-                        <label>Date de Début</label>
-                        <input 
-                            id="workStartDate"
-                            value={data.workStartDate}
-                            onChange={handleChange}
+                                <label>Position</label>
+                                <input 
+                                    id="positionTitle"
+                                    value={item.positionTitle}
+                                    onChange={(e) => handleChange(e, index, 'work')}
+                                />
+                                <div className="date-pick">
+                                    <div className="date-pick__start">
+                                        <label>Date de Début</label>
+                                        <input 
+                                            id="workStartDate"
+                                            value={item.workStartDate}
+                                            onChange={(e) => handleChange(e, index, 'work')}
+                                        />
+                                    </div>
+                                    <div className="date-pick__start">
+                                        <label>Date de Fin</label>
+                                        <input 
+                                            id="workEndDate"
+                                            value={item.workEndDate}
+                                            onChange={(e) => handleChange(e, index, 'work')}
+                                        />
+                                </div>
+                                </div>
+                                <label>Emplacement</label>
+                                <input 
+                                    id="workLocation"
+                                    value={item.workLocation}
+                                    onChange={(e) => handleChange(e, index, 'work')}
+                                />
+
+                                <label>Description</label>
+                                <textarea
+                                    id="description"
+                                    value={item.description}
+                                    onChange={(e) => handleChange(e, index, 'work')}
+                                />
+                            </div>
+                        )
+                    ))}
+                </form>
+                ) :
+                <>
+                    <div className="work-list">
+                        {data.work.map(item => (
+                            <a key={item.id} onClick={() => handleShowInstance(item.id)}><div className="work-instance">{item.companyName}</div></a>
+                        ))}
+                    </div>
+                    <div className="work-add-container">
+                        <Button
+                            className="btn-plain add-btn"
+                            text="Ajouter"
                         />
                     </div>
-                    <div className="date-pick__start">
-                        <label>Date de Fin</label>
-                        <input 
-                            id="workEndDate"
-                            value={data.workEndDate}
-                            onChange={handleChange}
-                        />
-                </div>
-                </div>
-                <label>Emplacement</label>
-                <input 
-                    id="workLocation"
-                    value={data.workLocation}
-                    onChange={handleChange}
-                />
+                </>
+            }
 
-                <label>Description</label>
-                <textarea
-                    id="description"
-                    value={data.description}
-                    onChange={handleChange}
-                />
-            </form>
         </>
     )
 }
