@@ -42,8 +42,8 @@ export const UserForm = () => {
     }
     
     const [data, setData] = useState(initialData);
-    const [showForm, setShowForm] = useState(true);
-    const [educationId, setEducationId] = useState(data.education[0].id);
+    const [showForm, setShowForm] = useState(false);
+    const [educationId, setEducationId] = useState('whatever');
 
     const handleChange = (e, index, category) => {
         const { id, value } = e.target;
@@ -103,7 +103,23 @@ export const UserForm = () => {
           };
         });
         handleShowInstance(newId)
-      };
+    };
+
+    const handleDelete = () => {
+        handleShowForm();
+        setData((prevData) => {
+            const updatedEducation = prevData.education.filter(
+                (item) => item.id !== educationId
+            )
+            return {
+                ...prevData,
+                education : updatedEducation,
+            }
+        })
+        console.log(data.education)
+    }
+
+
 
     const clearForm = () => {
         setData({
@@ -167,6 +183,7 @@ export const UserForm = () => {
                             showForm={showForm}
                             handleChange={handleChange}
                             handleSubmit={handleSubmit}
+                            handleDelete={handleDelete}
                             handleShowInstance={handleShowInstance}
                             handleAddSchool={addSchool}
                         />         
@@ -242,14 +259,14 @@ export const CardPersonal = ({data, handleChange}) => {
     )
 }
 
-export const CardEducation = ({data, showForm, educationId, handleChange, handleSubmit, handleShowInstance, handleAddSchool}) => {
+export const CardEducation = ({data, showForm, educationId, handleChange, handleSubmit, handleDelete, handleShowInstance, handleAddSchool}) => {
     return (
         <>
             {showForm ?
                 (<form id="education-form">
                     {data.education.map((item, index) => (
                         (item.id === educationId && 
-                            <div key={item.id}>{console.log(item.id)}
+                            <div key={item.id}>{console.log("Card education: " + item.id)}
                                 <label>École</label>
                                 <input 
                                     id="school"
@@ -295,6 +312,7 @@ export const CardEducation = ({data, showForm, educationId, handleChange, handle
                             <Button
                                 className="edit-btn btn-plain"
                                 text="Supprimer"
+                                handleClick={handleDelete}
                             />
                         </div>
                         <div className="edit-buttons__other">
@@ -306,7 +324,7 @@ export const CardEducation = ({data, showForm, educationId, handleChange, handle
                                 className="edit-btn btn-full"
                                 text="Sauvegarder"
                                 type="submit"
-                                handleSubmit={handleSubmit}
+                                handleClick={handleSubmit}
                             /> 
                         </div>
                     </div>
@@ -322,7 +340,7 @@ export const CardEducation = ({data, showForm, educationId, handleChange, handle
                         <Button
                             className="btn-plain add-btn"
                             text="Ajouter"
-                            handleSubmit={handleAddSchool}
+                            handleClick={handleAddSchool}
                         />
                     </div>
                 </>

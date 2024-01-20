@@ -1,8 +1,8 @@
 /* eslint-disable react/prop-types */
-export const Button = ({text, className, button = "button", handleSubmit}) => {
+export const Button = ({text, className, button = "button", handleClick}) => {
     return (
         <>
-            <button onClick={handleSubmit} type={button} className={className}>{text}</button>
+            <button onClick={handleClick} type={button} className={className}>{text}</button>
         </>
     )
 }
