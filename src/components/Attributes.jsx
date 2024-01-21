@@ -12,8 +12,6 @@ export const Card = ({children}) => {
     )
 }
 
-// TODO: faire fonctionner le handleChange de Work card
-
 export const UserForm = () => {
     const initialData = {
         fullName: 'François Pignon',
@@ -348,7 +346,7 @@ export const CardEducation = ({data, showForm, educationId, handleChange, handle
                 (<form id="education-form">
                     {data.education.map((item, index) => (
                         (item.id === educationId && 
-                            <div key={item.id}>{console.log("Card education: " + item.id)}
+                            <div key={item.id}>
                                 <label>École</label>
                                 <input 
                                     id="school"
