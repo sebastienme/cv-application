@@ -331,8 +331,8 @@ input, textarea {
   display: block;
 }
 
-.work-list > a:first-child, .school-list > a:first-child {
-  border-bottom: none;
+.work-list > a:nth-child(2), .school-list > a:nth-child(2) {
+  border-top: none;
 }
 
 .school-instance, .work-instance {
