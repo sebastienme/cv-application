@@ -7,9 +7,9 @@ export const CV = ({data}) => {
                 <div className="cv-container__top__name">{data.fullName}</div>
                 <div className="cv-container__top__details">
                     <ul className="top__details__list">
-                        <li className="top__details__list__item"><img src="../public/icons8-pin-32.png" alt="" /><span>{data.email}</span></li>
-                        <li className="top__details__list__item"><img src="../public/icons8-phone-50.png" alt="" /><span>{data.phone}</span></li>
-                        <li className="top__details__list__item"><img src="../public/icons8-email-64.png" alt="" /><span>{data.address}</span></li>
+                        <li className="top__details__list__item"><img src="/icons8-pin-32.png" alt="" /><span>{data.email}</span></li>
+                        <li className="top__details__list__item"><img src="/icons8-phone-50.png" alt="" /><span>{data.phone}</span></li>
+                        <li className="top__details__list__item"><img src="/icons8-email-64.png" alt="" /><span>{data.address}</span></li>
                     </ul>
                 </div>
             </div>
