@@ -20,25 +20,50 @@ export const UserForm = () => {
         email: 'francois.pignon@gmail.com',
         phone: '514-222-2222',
         address: 'Montréal, Qc, Canada',
-        education: [{
-            id: uuidv4(),
-            school: 'Université du Québec à Montréal',
-            degree: 'Maîtrise en fiscalité',
-            startDate: 'Septembre 1978',
-            endDate: 'Mai 1982',
-            location: 'Montréal, Qc'
-        }],
-        work: [{
-            id: uuidv4(),
-            companyName: 'Gouvernement du Québec',
-            positionTitle: `Chef, à l'impôt`,
-            workStartDate: 'Janvier 1984',
-            wordEndDate: `Aujourd'hui`,
-            workLocation: 'Montréal, Qc',
-            description: `Superviser et coordonner les activités liées à la collecte des impôts dans la province. 
-                        Responsable de la gestion des équipes chargées de l'application des lois fiscales, de veiller à la conformité des contribuables
-                        et de mettre en œuvre des politiques visant à maximiser les recettes tout en assurant l'équité et la transparence dans le système fiscal.` 
-        }]
+        education: [
+            {
+                id: uuidv4(),
+                school: 'Université du Québec à Montréal',
+                degree: 'Maîtrise en fiscalité',
+                startDate: 'Septembre 1978',
+                endDate: '1982',
+                location: 'Montréal, Qc'
+            },
+            {
+                id: uuidv4(),
+                school: 'HEC Montréal',
+                degree: 'Baccalauréat en comptabilité',
+                startDate: 'Septembre 1974',
+                endDate: '1977',
+                location: 'Montréal, Qc'
+            },
+        ],
+        work: [
+            {
+                id: uuidv4(),
+                companyName: 'Gouvernement du Québec',
+                positionTitle: `Chef, à l'impôt`,
+                workStartDate: '1984',
+                workEndDate: '2018',
+                workLocation: 'Montréal, Qc',
+                description: `Superviser et coordonner les activités liées à la collecte des impôts dans la province. 
+                            Responsable de la gestion des équipes chargées de l'application des lois fiscales, de veiller à la conformité des contribuables
+                            et de mettre en œuvre des politiques visant à maximiser les recettes tout en assurant l'équité et la transparence dans le système fiscal.` 
+            },
+            {
+                id: uuidv4(),
+                companyName: 'Impôt Expo',
+                positionTitle: `Président`,
+                workStartDate: '2020',
+                workEndDate: `Aujourd'hui`,
+                workLocation: 'Brossard, Qc',
+                description: `En collaboration avec les équipes de direction, vous êtes chargé de définir la vision et les objectifs de l'entreprise,
+                             de superviser la mise en œuvre de stratégies commerciales efficaces, et de veiller à ce que les opérations répondent aux normes de qualité
+                             tout en restant conformes aux réglementations fiscales en vigueur. En tant que leader, vous êtes également responsable de la promotion
+                             du développement de l'entreprise, de la gestion des relations avec les clients et des décisions stratégiques visant à assurer la croissance
+                             et la pérennité de la société dans le secteur des services fiscaux.` 
+            }
+        ]
     }
     
     const [data, setData] = useState(initialData);
@@ -95,6 +120,11 @@ export const UserForm = () => {
         handleShowForm();
     }
 
+    const handleSubmitWork = (e) => {
+        e.preventDefault();
+        handleShowWorkForm();
+    }
+
     const addSchool = () => {
         handleShowForm();
         const newId = uuidv4();
@@ -107,7 +137,7 @@ export const UserForm = () => {
             endDate: '',
             location: '',
           };
-      
+
           return {
             ...prevData,
             education: [...prevData.education, newEducation],
@@ -115,6 +145,28 @@ export const UserForm = () => {
         });
         handleShowInstance(newId)
     };
+
+    const AddWork = () => {
+        handleShowWorkForm();
+        const newId = uuidv4();
+        setData((prevData) => {
+            const newWork = {
+                id: newId,
+                companyName: '',
+                positionTitle: '',
+                workStartDate: '',
+                wordEndDate: '',
+                workLocation: '',
+                description: '',
+            };
+
+            return {
+                ...prevData,
+                work: [...prevData.work, newWork],
+            };
+        });
+        handleShowWorkInstance(newId);
+    }
 
     const handleDelete = () => {
         handleShowForm();
@@ -125,6 +177,19 @@ export const UserForm = () => {
             return {
                 ...prevData,
                 education : updatedEducation,
+            }
+        })
+    }
+
+    const handleDeleteWork = () => {
+        handleShowWorkForm();
+        setData((prevData) => {
+            const updateWork = prevData.work.filter(
+                (item) => item.id !== workId
+            )
+            return {
+                ...prevData,
+                work: updateWork,
             }
         })
     }
@@ -144,6 +209,7 @@ export const UserForm = () => {
             location: '',
           }],
           work: [{
+            id: '',
             companyName: '',
             positionTitle: '',
             workStartDate: '',
@@ -153,21 +219,23 @@ export const UserForm = () => {
           }]
         });
         setEducationId('');
+        setWorkId('');
         setShowForm(true);
+        setShowWorkForm(true);
       };
 
       const goBackToInitialData = () => {
         setData(initialData);
         setEducationId(initialData.education[0].id)
+        setWorkId(initialData.work[0].id)
       }
 
     return (
         <>
             <div className="form-side">
                 <div className="form-side__style">
-                    <Card>
-                        <div>bla bla</div>
-                    </Card>
+                <div className="form-side__style__box">
+                </div>
                 </div>
                 <div className="form-side__content">
                     <Card>
@@ -203,7 +271,10 @@ export const UserForm = () => {
                             handleChange={handleChange}
                             workId={workId}
                             showForm={showWorkForm}
+                            handleSubmit={handleSubmitWork}
+                            handleDelete={handleDeleteWork}
                             handleShowInstance={handleShowWorkInstance}
+                            handleAddWork={AddWork}
                         />
                     </Card>
                 </div>
@@ -356,7 +427,7 @@ export const CardEducation = ({data, showForm, educationId, handleChange, handle
     )
 }
 
-export const CardJob = ({data, handleChange, workId, showForm, handleShowInstance}) => {
+export const CardJob = ({data, handleChange, workId, showForm, handleShowInstance, handleAddWork, handleDelete, handleSubmit}) => {
     return (
         <>
             {showForm ?
@@ -411,6 +482,23 @@ export const CardJob = ({data, handleChange, workId, showForm, handleShowInstanc
                             </div>
                         )
                     ))}
+                    <div className="edit-buttons">
+                        <div className="edit-buttons__delete">
+                            <Button
+                                className="edit-btn btn-plain"
+                                text="Supprimer"
+                                handleClick={handleDelete}
+                            />
+                        </div>
+                        <div className="edit-buttons__other">
+                            <Button
+                                className="edit-btn btn-full"
+                                text="Sauvegarder"
+                                type="submit"
+                                handleClick={handleSubmit}
+                            /> 
+                        </div>
+                    </div>
                 </form>
                 ) :
                 <>
@@ -423,6 +511,7 @@ export const CardJob = ({data, handleChange, workId, showForm, handleShowInstanc
                         <Button
                             className="btn-plain add-btn"
                             text="Ajouter"
+                            handleClick={handleAddWork}
                         />
                     </div>
                 </>

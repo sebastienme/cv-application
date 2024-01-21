@@ -51,7 +51,7 @@ ul {
 
 a {
   font-weight: 500;
-  color: #646cff;
+  color: black;
   text-decoration: inherit;
   cursor: pointer;
 }
@@ -101,7 +101,7 @@ button:focus-visible {
     color: #747bff;
   }
   button {
-    background-color: #f9f9f9;
+    background-color: #c9ccff;
   }
 }
 
@@ -178,6 +178,11 @@ input, textarea {
   outline: none;
 }
 
+.card > h2 {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
 .date-pick {
   display: flex;
   justify-content: space-between;
@@ -218,7 +223,7 @@ input, textarea {
   border: 1px solid #ddd;
   background-color: #fff;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-  height: 29.7cm;
+  min-height: 29.7cm;
 }
 
 .cv-container__top {
@@ -277,6 +282,7 @@ input, textarea {
 .middle__section__item__details {
   display: flex;
   justify-content: space-between;
+  margin-top: 15px;
 }
 
 .item__details__left {
@@ -314,17 +320,39 @@ input, textarea {
   flex-direction: column;
 }
 
-.school-instance {
-  padding-top: 10px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid grey;
-  border-top: 1px solid grey;
+.school-list > a {
+  border-bottom: 5px solid #f3f4f6;
+  border-top: 5px solid #f3f4f6;
 }
 
-.school-add-container {
+.work-list > a {
+  border-bottom: 5px solid #f3f4f6;
+  border-top: 5px solid #f3f4f6;
+  display: block;
+}
+
+.work-list > a:first-child, .school-list > a:first-child {
+  border-bottom: none;
+}
+
+.school-instance, .work-instance {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.school-add-container, .work-add-container {
   margin: 35px 0 5px 0;
 }
 
+.form-side__style {
+  width: 400px;
+}
+
+@media only screen and (max-width: 1200px) {
+  .form-side__style {
+    display: none;
+  }
+}
 
 @media only screen and (max-width: 968px) {
   .form-side {
