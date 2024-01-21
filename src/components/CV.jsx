@@ -24,9 +24,11 @@ export const CV = ({data}) => {
                     </li>
                     <li className="middle__section__item">
                         <div className="middle__section__item__title">Expérience Professionel</div>
-                        <WorkItem
-                            data={data}
-                        />
+                        {data.work.map((item) => (
+                            <>
+                                <WorkItem key={item.id} data={item} />
+                            </>
+                        ))}
                     </li>
                 </ul>
             </div>
