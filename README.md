@@ -1,8 +1,25 @@
-# React + Vite
+# CV builder
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+CV builder generator
 
-Currently, two official plugins are available:
+## Link to app
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+https://vocal-khapse-ae4500.netlify.app/
+
+## Getting Started
+
+A web app to generate a cv
+
+### Prerequisites
+
+List any prerequisites or dependencies that need to be installed before running the application.
+
+- [Node.js](https://nodejs.org/)
+- [npm](https://www.npmjs.com/)
+
+### Installation
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/sebastienme/cv-application.git
