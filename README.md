@@ -23,3 +23,13 @@ List any prerequisites or dependencies that need to be installed before running 
 
    ```bash
    git clone https://github.com/sebastienme/cv-application.git
+   cd cv-application
+   npm install
+   npm run build
+
+2. Running Locally
+
+   ```bash
+   npm run dev
+
+3. Visit http://localhost:3000 in your browser.
