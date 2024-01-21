@@ -1,6 +1,6 @@
 # CV builder
 
-CV builder generator
+CV builder generator built in React
 
 ## Link to app
 
